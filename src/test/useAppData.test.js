@@ -77,4 +77,10 @@ describe('useAppData', () => {
     expect(result.current.weekDays).toHaveLength(7)
     expect(result.current.weekDays[6].isToday).toBe(true) // May 24 is Sunday
   })
+
+  it('togglePracticeDay ignores future dates', () => {
+    const { result } = renderHook(() => useAppData())
+    act(() => result.current.togglePracticeDay('2026-05-25')) // future relative to mocked May 24
+    expect(result.current.practiceDays).not.toContain('2026-05-25')
+  })
 })

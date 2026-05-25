@@ -19,6 +19,7 @@ export function useAppData() {
   }, [data])
 
   const togglePracticeDay = useCallback((dateStr) => {
+    if (dateStr > today()) return
     setData(prev => ({
       ...prev,
       practiceDays: prev.practiceDays.includes(dateStr)

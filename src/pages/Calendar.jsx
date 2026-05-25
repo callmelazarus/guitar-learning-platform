@@ -11,6 +11,7 @@ export default function Calendar() {
   const [month, setMonth] = useState(now.getMonth())
   const { practiceDays, songHistory, togglePracticeDay } = useAppData()
   const milestones = getMilestones(songHistory)
+  const isCurrentMonth = year === now.getFullYear() && month === now.getMonth()
 
   function prev() {
     if (month === 0) { setYear(y => y - 1); setMonth(11) }
@@ -24,9 +25,14 @@ export default function Calendar() {
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 }}>
-        <button onClick={prev} style={{ background: 'var(--surface2)', color: 'var(--text)', padding: '8px 16px' }}>‹</button>
+        <button onClick={prev} aria-label="Previous month" style={{ background: 'var(--surface2)', color: 'var(--text)', padding: '8px 16px' }}>‹</button>
         <h2 style={{ margin: 0 }}>{MONTHS[month]} {year}</h2>
-        <button onClick={next} style={{ background: 'var(--surface2)', color: 'var(--text)', padding: '8px 16px' }}>›</button>
+        <button
+          onClick={next}
+          disabled={isCurrentMonth}
+          aria-label="Next month"
+          style={{ background: 'var(--surface2)', color: 'var(--text)', padding: '8px 16px', opacity: isCurrentMonth ? 0.3 : 1 }}
+        >›</button>
       </div>
       <CalendarGrid
         year={year}
