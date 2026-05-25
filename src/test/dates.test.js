@@ -64,9 +64,12 @@ describe('getWeekDays', () => {
   })
 
   it('marks future days', () => {
+    vi.setSystemTime(new Date(2026, 4, 20)) // Wednesday May 20
     const days = getWeekDays([])
-    // May 24 is Sunday so no future days in this week
-    expect(days.every(d => !d.isFuture || d.dateStr > '2026-05-24')).toBe(true)
+    // Thu May 21, Fri May 22, Sat May 23, Sun May 24 should all be future
+    expect(days.find(d => d.dateStr === '2026-05-21').isFuture).toBe(true)
+    expect(days.find(d => d.dateStr === '2026-05-24').isFuture).toBe(true)
+    expect(days.find(d => d.dateStr === '2026-05-20').isFuture).toBe(false)
   })
 })
 

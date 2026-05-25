@@ -62,6 +62,7 @@ export function getDaysInMonth(year, month) {
 }
 
 export function getMilestones(songHistory) {
+  // Assumes at most one song learned per day (one-song-per-month design)
   return songHistory.reduce((acc, song) => {
     if (song.dateLearned) acc[song.dateLearned] = song.title
     return acc
