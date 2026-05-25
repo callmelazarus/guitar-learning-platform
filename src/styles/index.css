@@ -1,0 +1,40 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+  --bg: #1a1a2e;
+  --surface: #16213e;
+  --surface2: #0f3460;
+  --accent: #e94560;
+  --accent2: #f5a623;
+  --green: #4caf50;
+  --text: #e0e0e0;
+  --text-muted: #888;
+  --radius: 8px;
+  --font: 'Segoe UI', system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  min-height: 100vh;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: var(--radius);
+  font-family: var(--font);
+}
+
+input, select, textarea {
+  font-family: var(--font);
+  background: var(--surface2);
+  border: 1px solid #444;
+  border-radius: var(--radius);
+  color: var(--text);
+  padding: 8px 12px;
+}
+
+a { color: var(--accent2); text-decoration: none; }
