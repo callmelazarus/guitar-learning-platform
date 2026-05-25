@@ -58,7 +58,6 @@ export default function CircleOfFifths() {
           const angle = i * 30
           const isSelected = selected === key
           const isRelated = selectedIdx >= 0 && (
-            i === selectedIdx ||
             i === (selectedIdx + 1) % 12 ||
             i === (selectedIdx + 11) % 12
           )
@@ -78,7 +77,7 @@ export default function CircleOfFifths() {
                 cx={cx} cy={cy}
                 r1={innerR} r2={coreR}
                 startAngle={angle - 14} endAngle={angle + 14}
-                fill={isSelected ? '#7a1f30' : isRelated ? '#2a3a5f' : '#162940'}
+                fill={isSelected ? 'var(--accent)' : isRelated ? 'var(--surface2)' : 'var(--surface)'}
                 stroke="#0a1628"
                 onClick={() => handleSelect(key)}
               >
