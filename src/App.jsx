@@ -3,6 +3,7 @@ import NavBar from './components/NavBar'
 import Dashboard from './pages/Dashboard'
 import Calendar from './pages/Calendar'
 import Songs from './pages/Songs'
+import Theory from './pages/Theory'
 
 export default function App() {
   return (
@@ -13,7 +14,7 @@ export default function App() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/songs" element={<Songs />} />
-          <Route path="/theory" element={<div>Theory</div>} />
+          <Route path="/theory" element={<Theory />} />
         </Routes>
       </main>
     </div>
