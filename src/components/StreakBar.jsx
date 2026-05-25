@@ -4,6 +4,7 @@ export default function StreakBar({ weekDays }) {
       {weekDays.map(day => (
         <div key={day.dateStr} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
           <div
+            role="img"
             aria-label={day.practiced ? `${day.dayName} practiced` : `${day.dayName} not done`}
             style={{
               width: 36,

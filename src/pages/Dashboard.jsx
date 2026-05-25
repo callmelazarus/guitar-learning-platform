@@ -1,4 +1,5 @@
 import { useAppData } from '../hooks/useAppData'
+import { today } from '../utils/dates'
 import StreakBar from '../components/StreakBar'
 import StreakCounter from '../components/StreakCounter'
 import LogPracticeButton from '../components/LogPracticeButton'
@@ -17,7 +18,7 @@ export default function Dashboard() {
       <section style={{ textAlign: 'center' }}>
         <StreakCounter streak={streak} />
         <div style={{ marginTop: 24 }}>
-          <LogPracticeButton practiceDays={practiceDays} togglePracticeDay={togglePracticeDay} />
+          <LogPracticeButton todayStr={today()} practiceDays={practiceDays} togglePracticeDay={togglePracticeDay} />
         </div>
       </section>
       <section>

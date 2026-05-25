@@ -1,7 +1,4 @@
-import { today } from '../utils/dates'
-
-export default function LogPracticeButton({ practiceDays, togglePracticeDay }) {
-  const todayStr = today()
+export default function LogPracticeButton({ todayStr, practiceDays, togglePracticeDay }) {
   const logged = practiceDays.includes(todayStr)
   return (
     <button
