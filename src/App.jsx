@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import NavBar from './components/NavBar'
 import Dashboard from './pages/Dashboard'
 import Calendar from './pages/Calendar'
+import Songs from './pages/Songs'
 
 export default function App() {
   return (
@@ -11,7 +12,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/calendar" element={<Calendar />} />
-          <Route path="/songs" element={<div>Songs</div>} />
+          <Route path="/songs" element={<Songs />} />
           <Route path="/theory" element={<div>Theory</div>} />
         </Routes>
       </main>
