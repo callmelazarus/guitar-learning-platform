@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { loadData, saveData, isStorageAvailable } from '../utils/storage'
 import { today, getStreakCount, getWeekDays } from '../utils/dates'
 
@@ -12,7 +12,9 @@ export function useAppData() {
   const [data, setData] = useState(() => ({ ...DEFAULT_DATA, ...loadData() }))
   const [storageAvailable] = useState(isStorageAvailable)
 
+  const isMounted = useRef(false)
   useEffect(() => {
+    if (!isMounted.current) { isMounted.current = true; return }
     saveData(data)
   }, [data])
 
