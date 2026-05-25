@@ -11,10 +11,11 @@ const CHORDS = [
 
 function ChordDiagram({ name, frets }) {
   const fretted = frets.filter(f => f > 0)
+  const hasOpen = frets.some(f => f === 0)
   const minFret = fretted.length ? Math.min(...fretted) : 1
   const maxFret = fretted.length ? Math.max(...fretted) : 4
   const displayFrets = Math.max(4, maxFret - minFret + 1)
-  const offset = fretted.length ? minFret - 1 : 0
+  const offset = (hasOpen || !fretted.length) ? 0 : minFret - 1
 
   const W = 80, H = 90, padL = 14, padT = 16
   const strW = (W - padL) / 5
