@@ -1,11 +1,17 @@
 const STATUS_COLOR = { learned: 'var(--green)', in_progress: 'var(--accent2)', not_started: 'var(--text-muted)' }
 
 export default function SongHistory({ songs }) {
-  if (!songs.length) return <p style={{ color: 'var(--text-muted)' }}>No songs learned yet.</p>
+  const sorted = [...songs].sort((a, b) => {
+    const da = a.dateLearned || a.dateStarted || ''
+    const db = b.dateLearned || b.dateStarted || ''
+    return db.localeCompare(da)
+  })
+
+  if (!sorted.length) return <p style={{ color: 'var(--text-muted)' }}>No songs learned yet.</p>
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-      {songs.map(s => (
+      {sorted.map(s => (
         <div key={(s.dateLearned || s.dateStarted) + s.title} style={{ background: 'var(--surface)', borderRadius: 'var(--radius)', padding: '16px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
             <div style={{ fontWeight: 600 }}>{s.title}</div>
