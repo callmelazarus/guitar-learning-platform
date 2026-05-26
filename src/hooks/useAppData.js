@@ -4,12 +4,25 @@ import { today, getStreakCount, getWeekDays } from '../utils/dates'
 
 const DEFAULT_DATA = {
   practiceDays: [],
-  currentSong: null,
+  activeSongs: [],
   songHistory: [],
 }
 
+function migrate(raw) {
+  if (!raw) return DEFAULT_DATA
+  if ('currentSong' in raw && !('activeSongs' in raw)) {
+    const { currentSong, ...rest } = raw
+    return {
+      ...DEFAULT_DATA,
+      ...rest,
+      activeSongs: currentSong ? [{ ...currentSong, id: String(Date.now()) }] : [],
+    }
+  }
+  return { ...DEFAULT_DATA, ...raw }
+}
+
 export function useAppData() {
-  const [data, setData] = useState(() => ({ ...DEFAULT_DATA, ...loadData() }))
+  const [data, setData] = useState(() => migrate(loadData()))
   const [storageAvailable] = useState(isStorageAvailable)
 
   const isMounted = useRef(false)
@@ -28,27 +41,43 @@ export function useAppData() {
     }))
   }, [])
 
-  const setCurrentSong = useCallback((song) => {
-    setData(prev => ({ ...prev, currentSong: song }))
+  const addSong = useCallback((song) => {
+    setData(prev => ({
+      ...prev,
+      activeSongs: [...prev.activeSongs, { ...song, id: String(Date.now()) }],
+    }))
   }, [])
 
-  const markSongLearned = useCallback(() => {
+  const markSongLearned = useCallback((id) => {
     setData(prev => {
-      if (!prev.currentSong) return prev
-      const learned = { ...prev.currentSong, dateLearned: today(), status: 'learned' }
-      return { ...prev, currentSong: null, songHistory: [learned, ...prev.songHistory] }
+      const song = prev.activeSongs.find(s => s.id === id)
+      if (!song) return prev
+      const learned = { ...song, dateLearned: today(), status: 'learned' }
+      return {
+        ...prev,
+        activeSongs: prev.activeSongs.filter(s => s.id !== id),
+        songHistory: [learned, ...prev.songHistory],
+      }
     })
+  }, [])
+
+  const removeSong = useCallback((id) => {
+    setData(prev => ({
+      ...prev,
+      activeSongs: prev.activeSongs.filter(s => s.id !== id),
+    }))
   }, [])
 
   return {
     practiceDays: data.practiceDays,
-    currentSong: data.currentSong,
+    activeSongs: data.activeSongs,
     songHistory: data.songHistory,
     storageAvailable,
     streak: getStreakCount(data.practiceDays),
     weekDays: getWeekDays(data.practiceDays),
     togglePracticeDay,
-    setCurrentSong,
+    addSong,
     markSongLearned,
+    removeSong,
   }
 }

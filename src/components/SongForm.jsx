@@ -7,7 +7,7 @@ const STATUS = [
   { value: 'in_progress', label: 'In Progress' },
 ]
 
-export default function SongForm({ onSave }) {
+export default function SongForm({ onSave, onCancel }) {
   const [form, setForm] = useState({
     title: '', artist: '', key: 'G', dateStarted: today(), youtubeUrl: '', tabUrl: '', status: 'in_progress',
   })
@@ -60,9 +60,16 @@ export default function SongForm({ onSave }) {
         <div style={{ fontSize: 13, color: 'var(--text-muted)' }}>Tab URL (optional)</div>
         <input style={inputStyle} value={form.tabUrl} onChange={set('tabUrl')} placeholder="https://ultimate-guitar.com/..." type="url" />
       </label>
-      <button type="submit" style={{ background: 'var(--accent)', color: '#fff', padding: '10px 24px', fontWeight: 600, fontSize: 15 }}>
-        Save Song
-      </button>
+      <div style={{ display: 'flex', gap: 12 }}>
+        <button type="submit" style={{ background: 'var(--accent)', color: '#fff', padding: '10px 24px', fontWeight: 600, fontSize: 15 }}>
+          Save Song
+        </button>
+        {onCancel && (
+          <button type="button" onClick={onCancel} style={{ background: 'var(--surface2)', color: 'var(--text-muted)', padding: '10px 24px', fontSize: 15 }}>
+            Cancel
+          </button>
+        )}
+      </div>
     </form>
   )
 }

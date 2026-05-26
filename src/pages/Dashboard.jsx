@@ -7,7 +7,7 @@ import SongCard from '../components/SongCard'
 import StorageBanner from '../components/StorageBanner'
 
 export default function Dashboard() {
-  const { practiceDays, currentSong, streak, weekDays, togglePracticeDay, storageAvailable } = useAppData()
+  const { practiceDays, activeSongs, streak, weekDays, togglePracticeDay, storageAvailable } = useAppData()
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
       <StorageBanner available={storageAvailable} />
@@ -22,8 +22,14 @@ export default function Dashboard() {
         </div>
       </section>
       <section>
-        <h2 style={{ margin: '0 0 16px', color: 'var(--text-muted)', fontWeight: 400 }}>Current Song</h2>
-        <SongCard song={currentSong} />
+        <h2 style={{ margin: '0 0 16px', color: 'var(--text-muted)', fontWeight: 400 }}>Active Songs</h2>
+        {activeSongs.length === 0 ? (
+          <SongCard song={null} />
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            {activeSongs.map(song => <SongCard key={song.id} song={song} />)}
+          </div>
+        )}
       </section>
     </div>
   )

@@ -13,7 +13,7 @@ describe('useAppData', () => {
   it('initializes with empty defaults', () => {
     const { result } = renderHook(() => useAppData())
     expect(result.current.practiceDays).toEqual([])
-    expect(result.current.currentSong).toBeNull()
+    expect(result.current.activeSongs).toEqual([])
     expect(result.current.songHistory).toEqual([])
     expect(result.current.streak).toBe(0)
   })
@@ -32,27 +32,46 @@ describe('useAppData', () => {
     expect(result.current.practiceDays).not.toContain('2026-05-24')
   })
 
-  it('setCurrentSong updates currentSong', () => {
+  it('addSong adds a song with a generated id', () => {
     const { result } = renderHook(() => useAppData())
     const song = { title: 'Goodness of God', artist: 'Bethel Music', key: 'G', dateStarted: '2026-05-01', youtubeUrl: '', tabUrl: '', status: 'in_progress' }
-    act(() => result.current.setCurrentSong(song))
-    expect(result.current.currentSong).toEqual(song)
+    act(() => result.current.addSong(song))
+    expect(result.current.activeSongs).toHaveLength(1)
+    expect(result.current.activeSongs[0].title).toBe('Goodness of God')
+    expect(result.current.activeSongs[0].id).toBeDefined()
   })
 
-  it('markSongLearned moves currentSong to history with dateLearned', () => {
+  it('addSong supports multiple active songs', () => {
+    const { result } = renderHook(() => useAppData())
+    act(() => result.current.addSong({ title: 'Song A', artist: '', key: 'G', dateStarted: '2026-05-01', youtubeUrl: '', tabUrl: '', status: 'in_progress' }))
+    act(() => result.current.addSong({ title: 'Song B', artist: '', key: 'D', dateStarted: '2026-05-01', youtubeUrl: '', tabUrl: '', status: 'in_progress' }))
+    expect(result.current.activeSongs).toHaveLength(2)
+  })
+
+  it('markSongLearned moves song to history with dateLearned', () => {
     const { result } = renderHook(() => useAppData())
     const song = { title: 'Goodness of God', artist: 'Bethel Music', key: 'G', dateStarted: '2026-05-01', youtubeUrl: '', tabUrl: '', status: 'in_progress' }
-    act(() => result.current.setCurrentSong(song))
-    act(() => result.current.markSongLearned())
-    expect(result.current.currentSong).toBeNull()
+    act(() => result.current.addSong(song))
+    const id = result.current.activeSongs[0].id
+    act(() => result.current.markSongLearned(id))
+    expect(result.current.activeSongs).toHaveLength(0)
     expect(result.current.songHistory[0].dateLearned).toBe('2026-05-24')
     expect(result.current.songHistory[0].status).toBe('learned')
   })
 
-  it('markSongLearned is a no-op when no current song', () => {
+  it('markSongLearned is a no-op for unknown id', () => {
     const { result } = renderHook(() => useAppData())
-    act(() => result.current.markSongLearned())
+    act(() => result.current.markSongLearned('nonexistent'))
     expect(result.current.songHistory).toEqual([])
+  })
+
+  it('removeSong removes from activeSongs without archiving', () => {
+    const { result } = renderHook(() => useAppData())
+    act(() => result.current.addSong({ title: 'Song A', artist: '', key: 'G', dateStarted: '2026-05-01', youtubeUrl: '', tabUrl: '', status: 'in_progress' }))
+    const id = result.current.activeSongs[0].id
+    act(() => result.current.removeSong(id))
+    expect(result.current.activeSongs).toHaveLength(0)
+    expect(result.current.songHistory).toHaveLength(0)
   })
 
   it('persists data to localStorage', () => {
@@ -65,11 +84,22 @@ describe('useAppData', () => {
   it('loads persisted data on mount', () => {
     localStorage.setItem('guitarApp', JSON.stringify({
       practiceDays: ['2026-05-23', '2026-05-24'],
-      currentSong: null,
+      activeSongs: [],
       songHistory: [],
     }))
     const { result } = renderHook(() => useAppData())
     expect(result.current.streak).toBe(2)
+  })
+
+  it('migrates old currentSong format to activeSongs', () => {
+    localStorage.setItem('guitarApp', JSON.stringify({
+      practiceDays: [],
+      currentSong: { title: 'Way Maker', artist: 'Sinach', key: 'D', dateStarted: '2026-04-01', youtubeUrl: '', tabUrl: '', status: 'in_progress' },
+      songHistory: [],
+    }))
+    const { result } = renderHook(() => useAppData())
+    expect(result.current.activeSongs).toHaveLength(1)
+    expect(result.current.activeSongs[0].title).toBe('Way Maker')
   })
 
   it('weekDays reflects current week', () => {
