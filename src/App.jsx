@@ -4,6 +4,7 @@ import Dashboard from './pages/Dashboard'
 import Calendar from './pages/Calendar'
 import Songs from './pages/Songs'
 import Theory from './pages/Theory'
+import Progressions from './pages/Progressions'
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/songs" element={<Songs />} />
           <Route path="/theory" element={<Theory />} />
+          <Route path="/progressions" element={<Progressions />} />
         </Routes>
       </main>
     </div>

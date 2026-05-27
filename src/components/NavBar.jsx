@@ -4,6 +4,7 @@ const links = [
   { to: '/', label: 'Dashboard' },
   { to: '/calendar', label: 'Calendar' },
   { to: '/songs', label: 'Songs' },
+  { to: '/progressions', label: 'Chords' },
   { to: '/theory', label: 'Theory' },
 ]
 
