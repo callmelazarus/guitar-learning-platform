@@ -4,6 +4,8 @@ A personal, local-first web app for building consistent guitar practice habits, 
 
 No backend. No login. All data lives in your browser's `localStorage`.
 
+Hosted site: https://guitar-learning-platform-chi.vercel.app/
+
 ---
 
 ## Features
