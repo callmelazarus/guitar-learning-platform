@@ -27,8 +27,8 @@ export default function SongCard({ song }) {
         <span style={{ color: STATUS_COLOR[song.status] || 'var(--text-muted)', fontSize: 13 }}>
           {STATUS_LABEL[song.status] || song.status}
         </span>
-        {song.youtubeUrl && <a href={song.youtubeUrl} target="_blank" rel="noreferrer" style={{ fontSize: 13 }}>YouTube ↗</a>}
-        {song.tabUrl && <a href={song.tabUrl} target="_blank" rel="noreferrer" style={{ fontSize: 13 }}>Tab ↗</a>}
+        {song.youtubeUrl && <a href={song.youtubeUrl} target="_blank" rel="noreferrer" style={{ fontSize: 14, fontWeight: 600, background: 'var(--surface2)', color: 'var(--accent2)', padding: '10px 24px', borderRadius: 'var(--radius)', textDecoration: 'none' }}>YouTube ↗</a>}
+        {song.tabUrl && <a href={song.tabUrl} target="_blank" rel="noreferrer" style={{ fontSize: 14, fontWeight: 600, background: 'var(--surface2)', color: 'var(--accent2)', padding: '10px 24px', borderRadius: 'var(--radius)', textDecoration: 'none' }}>Tab ↗</a>}
       </div>
     </div>
   )
