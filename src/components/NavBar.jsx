@@ -18,7 +18,7 @@ export default function NavBar() {
       alignItems: 'center',
       borderBottom: '2px solid var(--surface2)',
     }}>
-      <span style={{ fontWeight: 700, color: 'var(--accent)', marginRight: 16 }}>🎸 Guitar</span>
+      <span style={{ fontWeight: 700, color: 'var(--accent)', marginRight: 16 }}>🎸 Guitar Practice Tracker</span>
       {links.map(l => (
         <NavLink
           key={l.to}
