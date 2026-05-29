@@ -1,4 +1,4 @@
-# Guitar Practice
+# Guitar Practice Tracker
 
 A personal, local-first web app for building consistent guitar practice habits, tracking songs you're learning, and referencing music theory — built with worship music in mind.
 
@@ -14,7 +14,7 @@ Hosted site: https://guitar-learning-platform-chi.vercel.app/
 - **Weekly streak bar** — Mon–Sun circles showing which days you practiced this week
 - **Streak counter** — consecutive-day streak with milestone badges at 7, 30, and 100 days
 - **Log Practice button** — one tap logs today; tap again to remove it
-- **Active songs** — quick view of every song currently in progress
+- **Active songs** — quick view of every song currently in progress, with Tab and YouTube links
 
 ### Practice Calendar
 - Monthly grid with prev/next navigation
@@ -27,6 +27,11 @@ Hosted site: https://guitar-learning-platform-chi.vercel.app/
 - **Mark as Learned** — archives the song with today's date and stamps a milestone on the calendar
 - **Song history** — all learned songs sorted by date
 
+### Chords
+- **Progression explorer** — select a progression (I–V–vi–IV, I–IV–V, I–vi–IV–V) and a key (G, D, A, E, C)
+- **Chord diagrams** — SVG fingering diagrams for each chord in the selected progression
+- **Song examples** — worship songs that use that progression in that key
+
 ### Theory Reference
 - **Circle of Fifths** — interactive SVG; click any key to see its relative minor and diatonic chords
 - **Open chord charts** — SVG diagrams for G, D, Em, Cadd9, A, E, Am, Bm
@@ -38,7 +43,7 @@ Hosted site: https://guitar-learning-platform-chi.vercel.app/
 ## Stack
 
 - **React 18** + **Vite**
-- **React Router v6** — four client-side routes
+- **React Router v6** — five client-side routes
 - **Vitest** + **@testing-library/react** — unit and component tests
 - No external state library — a single `useAppData` hook owns all state and localStorage I/O
 
@@ -97,3 +102,5 @@ All data is stored in `localStorage` under the key `guitarApp`:
 ```
 
 Data persists across browser sessions. It is scoped to the browser and device — clearing site data will erase it.
+
+Adding new fields to the data model is safe (defaults kick in for missing keys). Renaming or restructuring existing fields requires a migration case in the `migrate` function in `src/hooks/useAppData.js`.
