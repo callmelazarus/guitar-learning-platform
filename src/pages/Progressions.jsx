@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import ChordDiagram from '../components/ChordDiagram'
+import { ugSearchUrl } from '../utils/ugUrl'
 
 // frets: [low E, A, D, G, B, high e] — 0=open, -1=muted
 const CHORD_SHAPES = {
@@ -190,7 +191,9 @@ export default function Progressions() {
         <h2 style={{ margin: '0 0 12px', fontWeight: 400, color: 'var(--text-muted)' }}>Songs in {key} using this progression</h2>
         <ul style={{ margin: 0, padding: '0 0 0 20px', display: 'flex', flexDirection: 'column', gap: 8 }}>
           {songs.map(song => (
-            <li key={song} style={{ color: 'var(--text)', fontSize: 15 }}>{song}</li>
+            <li key={song} style={{ fontSize: 15 }}>
+              <a href={ugSearchUrl(song)} target="_blank" rel="noreferrer">{song}</a>
+            </li>
           ))}
         </ul>
       </section>

@@ -31,10 +31,11 @@ describe('StrummingPattern', () => {
     expect(screen.getByText('One down strum on each beat.')).toBeInTheDocument()
   })
 
-  it('renders all song examples', () => {
+  it('renders song examples as links to Ultimate Guitar', () => {
     render(<StrummingPattern pattern={PATTERN} />)
-    expect(screen.getByText('Amazing Grace')).toBeInTheDocument()
-    expect(screen.getByText('10,000 Reasons')).toBeInTheDocument()
+    const link = screen.getByRole('link', { name: 'Amazing Grace' })
+    expect(link).toBeInTheDocument()
+    expect(link.href).toContain('ultimate-guitar.com')
   })
 
   it('renders a play button', () => {

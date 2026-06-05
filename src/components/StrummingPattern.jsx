@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import StrummingDiagram from './StrummingDiagram'
 import { playPattern } from '../utils/strumAudio'
+import { ugSearchUrl } from '../utils/ugUrl'
 
 export default function StrummingPattern({ pattern }) {
   const { name, notation, beats, description, songs } = pattern
@@ -62,8 +63,8 @@ export default function StrummingPattern({ pattern }) {
         <span style={{ fontWeight: 600, color: 'var(--text)' }}>Songs: </span>
         {songs.flatMap((song, i) =>
           i === 0
-            ? [<span key={song}>{song}</span>]
-            : [<span key={`sep-${i}`}> · </span>, <span key={song}>{song}</span>]
+            ? [<a key={song} href={ugSearchUrl(song)} target="_blank" rel="noreferrer">{song}</a>]
+            : [<span key={`sep-${i}`}> · </span>, <a key={song} href={ugSearchUrl(song)} target="_blank" rel="noreferrer">{song}</a>]
         )}
       </div>
     </div>
