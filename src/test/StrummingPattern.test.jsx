@@ -1,6 +1,10 @@
-import { describe, it, expect } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { describe, it, expect, vi } from 'vitest'
+import { render, screen, fireEvent } from '@testing-library/react'
 import StrummingPattern from '../components/StrummingPattern'
+
+vi.mock('../utils/strumAudio', () => ({
+  playPattern: vi.fn(() => vi.fn()),  // returns a stop function
+}))
 
 const PATTERN = {
   id: 'all-down',
@@ -31,5 +35,23 @@ describe('StrummingPattern', () => {
     render(<StrummingPattern pattern={PATTERN} />)
     expect(screen.getByText('Amazing Grace')).toBeInTheDocument()
     expect(screen.getByText('10,000 Reasons')).toBeInTheDocument()
+  })
+
+  it('renders a play button', () => {
+    render(<StrummingPattern pattern={PATTERN} />)
+    expect(screen.getByRole('button', { name: /play/i })).toBeInTheDocument()
+  })
+
+  it('toggles to stop when play is clicked', () => {
+    render(<StrummingPattern pattern={PATTERN} />)
+    fireEvent.click(screen.getByRole('button', { name: /play/i }))
+    expect(screen.getByRole('button', { name: /stop/i })).toBeInTheDocument()
+  })
+
+  it('toggles back to play when stop is clicked', () => {
+    render(<StrummingPattern pattern={PATTERN} />)
+    fireEvent.click(screen.getByRole('button', { name: /play/i }))
+    fireEvent.click(screen.getByRole('button', { name: /stop/i }))
+    expect(screen.getByRole('button', { name: /play/i })).toBeInTheDocument()
   })
 })
