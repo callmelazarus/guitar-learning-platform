@@ -5,6 +5,7 @@ import Calendar from './pages/Calendar'
 import Songs from './pages/Songs'
 import Theory from './pages/Theory'
 import Progressions from './pages/Progressions'
+import Strumming from './pages/Strumming'
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
           <Route path="/songs" element={<Songs />} />
           <Route path="/theory" element={<Theory />} />
           <Route path="/progressions" element={<Progressions />} />
+          <Route path="/strumming" element={<Strumming />} />
         </Routes>
       </main>
     </div>

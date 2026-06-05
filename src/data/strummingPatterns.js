@@ -1,0 +1,42 @@
+export const STRUMMING_PATTERNS = [
+  {
+    id: 'all-down',
+    name: 'All Down',
+    notation: 'D D D D',
+    beats: ['D', null, 'D', null, 'D', null, 'D', null],
+    description: 'One down strum on each beat — the simplest possible pattern. Start here.',
+    songs: ['10,000 Reasons (Bless the Lord)', 'Amazing Grace', 'How Great Thou Art'],
+  },
+  {
+    id: 'down-down-up',
+    name: 'Down Down Up',
+    notation: 'D D U',
+    beats: ['D', null, 'D', null, null, 'U', null, null],
+    description: 'Adds a single upstroke on the & of beat 3, giving the pattern a little lift.',
+    songs: ['Lord Reign in Me', 'Blessed Be Your Name', 'Better Is One Day'],
+  },
+  {
+    id: 'd-du-udu',
+    name: 'D-DU-UDU',
+    notation: 'D DU UDU',
+    beats: ['D', null, 'D', 'U', 'U', 'D', 'U', null],
+    description: 'The classic folk and worship strum. Once you have this, you can play hundreds of songs.',
+    songs: ['Good Good Father', 'What a Beautiful Name', 'Cornerstone'],
+  },
+  {
+    id: 'd-du-d-du',
+    name: 'D-DU D-DU',
+    notation: 'D DU D DU',
+    beats: ['D', null, 'D', 'U', 'D', null, 'D', 'U'],
+    description: 'A steady, driving pattern that works well for mid-tempo worship songs.',
+    songs: ['How Great Is Our God', 'Build My Life', 'Reckless Love'],
+  },
+  {
+    id: 'slow-ballad',
+    name: 'Slow Ballad',
+    notation: 'D - - U - D U',
+    beats: ['D', null, null, 'U', null, 'D', 'U', null],
+    description: 'Spacious and gentle — perfect for slow worship ballads. Let each strum ring out.',
+    songs: ['Oceans (Where Feet May Fail)', 'It Is Well', 'Goodness of God'],
+  },
+]
