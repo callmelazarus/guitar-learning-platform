@@ -16,7 +16,39 @@ const CHORD_SHAPES = {
   'B':     [-1,2,4,4,4,2],
   'F#m':   [2,4,4,2,2,2],
   'C#m':   [-1,4,6,6,5,4],
+  // Sus & Add9
+  'Dsus2': [-1,-1,0,2,3,0],
+  'Dsus4': [-1,-1,0,2,3,3],
+  'Asus2': [-1,0,2,2,0,0],
+  'Asus4': [-1,0,2,2,3,0],
+  'Esus4': [0,2,2,2,0,0],
+  // Sevenths
+  'Gmaj7': [3,2,0,0,0,2],
+  'Dmaj7': [-1,-1,0,2,2,2],
+  'Fmaj7': [-1,3,3,2,1,0],
+  'Em7':   [0,2,2,0,3,0],
+  'Am7':   [-1,0,2,0,1,0],
+  // Slash chords
+  'G/B':   [-1,2,0,0,0,3],
+  'D/F#':  [2,0,0,2,3,2],
+  'C/G':   [3,3,2,0,1,0],
+  'Em/B':  [-1,2,2,0,0,0],
 }
+
+const CHORD_SECTIONS = [
+  {
+    label: 'Sus & Add9',
+    chords: ['Dsus2', 'Dsus4', 'Asus2', 'Asus4', 'Esus4'],
+  },
+  {
+    label: 'Sevenths',
+    chords: ['Gmaj7', 'Dmaj7', 'Fmaj7', 'Em7', 'Am7'],
+  },
+  {
+    label: 'Slash Chords',
+    chords: ['G/B', 'D/F#', 'C/G', 'Em/B'],
+  },
+]
 
 const PROGRESSIONS = [
   {
@@ -62,6 +94,7 @@ const KEYS = ['G', 'D', 'A', 'E', 'C']
 const btnBase = { padding: '8px 18px', borderRadius: 'var(--radius)', fontWeight: 600, fontSize: 14, cursor: 'pointer', border: 'none', transition: 'background 0.15s' }
 
 export default function Progressions() {
+  const [tab, setTab] = useState('chords')
   const [progId, setProgId] = useState(PROGRESSIONS[0].id)
   const [key, setKey] = useState('G')
 
@@ -70,6 +103,42 @@ export default function Progressions() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
+      <div style={{ display: 'flex', gap: 8 }}>
+        {['chords', 'progressions'].map(t => (
+          <button
+            key={t}
+            onClick={() => setTab(t)}
+            style={{
+              ...btnBase,
+              background: tab === t ? 'var(--accent)' : 'var(--surface2)',
+              color: tab === t ? '#fff' : 'var(--text-muted)',
+              textTransform: 'capitalize',
+            }}
+          >
+            {t === 'chords' ? 'Chords' : 'Progressions'}
+          </button>
+        ))}
+      </div>
+
+      {tab === 'chords' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
+          {CHORD_SECTIONS.map(section => (
+            <section key={section.label}>
+              <h2 style={{ margin: '0 0 16px', fontWeight: 400, color: 'var(--text-muted)' }}>{section.label}</h2>
+              <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+                {section.chords.map(chord => (
+                  <div key={chord} style={{ background: 'var(--surface)', borderRadius: 'var(--radius)', padding: '12px 16px', textAlign: 'center' }}>
+                    <ChordDiagram name={chord} frets={CHORD_SHAPES[chord]} />
+                  </div>
+                ))}
+              </div>
+            </section>
+          ))}
+        </div>
+      )}
+
+      {tab === 'progressions' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
       <section>
         <h2 style={{ margin: '0 0 16px', fontWeight: 400, color: 'var(--text-muted)' }}>Progression</h2>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
@@ -142,6 +211,8 @@ export default function Progressions() {
           ))}
         </ul>
       </section>
+        </div>
+      )}
     </div>
   )
 }
