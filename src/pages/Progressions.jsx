@@ -38,14 +38,17 @@ const CHORD_SHAPES = {
 const CHORD_SECTIONS = [
   {
     label: 'Sus & Add9',
+    description: 'Replace or add a note to a basic chord for an open, unresolved sound. That floating quality in modern worship comes from sus chords resolving back to the major.',
     chords: ['Dsus2', 'Dsus4', 'Asus2', 'Asus4', 'Esus4'],
   },
   {
     label: 'Sevenths',
+    description: 'Add a 7th interval to a triad for warmth and color. Maj7 chords feel dreamy; m7 chords feel smooth. Usually just one finger different from a chord you already know.',
     chords: ['Gmaj7', 'Dmaj7', 'Fmaj7', 'Em7', 'Am7'],
   },
   {
     label: 'Slash Chords',
+    description: 'The note after the slash is the bass note. G/B means a G chord with B in the bass. These create smooth stepwise bass movement when transitioning between chords.',
     chords: ['G/B', 'D/F#', 'C/G', 'Em/B'],
   },
 ]
@@ -94,7 +97,6 @@ const KEYS = ['G', 'D', 'A', 'E', 'C']
 const btnBase = { padding: '8px 18px', borderRadius: 'var(--radius)', fontWeight: 600, fontSize: 14, cursor: 'pointer', border: 'none', transition: 'background 0.15s' }
 
 export default function Progressions() {
-  const [tab, setTab] = useState('chords')
   const [progId, setProgId] = useState(PROGRESSIONS[0].id)
   const [key, setKey] = useState('G')
 
@@ -102,43 +104,24 @@ export default function Progressions() {
   const { chords, songs } = prog.keys[key]
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
-      <div style={{ display: 'flex', gap: 8 }}>
-        {['chords', 'progressions'].map(t => (
-          <button
-            key={t}
-            onClick={() => setTab(t)}
-            style={{
-              ...btnBase,
-              background: tab === t ? 'var(--accent)' : 'var(--surface2)',
-              color: tab === t ? '#fff' : 'var(--text-muted)',
-              textTransform: 'capitalize',
-            }}
-          >
-            {t === 'chords' ? 'Chords' : 'Progressions'}
-          </button>
-        ))}
-      </div>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 48 }}>
 
-      {tab === 'chords' && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
-          {CHORD_SECTIONS.map(section => (
-            <section key={section.label}>
-              <h2 style={{ margin: '0 0 16px', fontWeight: 400, color: 'var(--text-muted)' }}>{section.label}</h2>
-              <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-                {section.chords.map(chord => (
-                  <div key={chord} style={{ background: 'var(--surface)', borderRadius: 'var(--radius)', padding: '12px 16px', textAlign: 'center' }}>
-                    <ChordDiagram name={chord} frets={CHORD_SHAPES[chord]} />
-                  </div>
-                ))}
+      {CHORD_SECTIONS.map(section => (
+        <section key={section.label}>
+          <h2 style={{ margin: '0 0 8px', fontWeight: 400, color: 'var(--text-muted)' }}>{section.label}</h2>
+          <p style={{ margin: '0 0 16px', fontSize: 13, color: 'var(--text-muted)', maxWidth: 600 }}>{section.description}</p>
+          <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+            {section.chords.map(chord => (
+              <div key={chord} style={{ background: 'var(--surface)', borderRadius: 'var(--radius)', padding: '12px 16px', textAlign: 'center' }}>
+                <ChordDiagram name={chord} frets={CHORD_SHAPES[chord]} />
               </div>
-            </section>
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        </section>
+      ))}
 
-      {tab === 'progressions' && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
+      <hr style={{ border: 'none', borderTop: '1px solid var(--surface2)', margin: 0 }} />
+
       <section>
         <h2 style={{ margin: '0 0 16px', fontWeight: 400, color: 'var(--text-muted)' }}>Progression</h2>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
@@ -211,8 +194,6 @@ export default function Progressions() {
           ))}
         </ul>
       </section>
-        </div>
-      )}
     </div>
   )
 }
