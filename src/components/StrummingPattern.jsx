@@ -12,7 +12,7 @@ export default function StrummingPattern({ pattern }) {
   }, [])
 
   function handlePlay() {
-    const stop = playPattern(beats, 80, () => setPlaying(false))
+    const stop = playPattern(beats, 80)
     stopRef.current = stop
     setPlaying(true)
   }

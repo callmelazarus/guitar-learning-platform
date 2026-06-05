@@ -23,31 +23,30 @@ function karplusBuffer(audioCtx, frequency) {
   return buf
 }
 
-export function playPattern(beats, bpm = DEFAULT_BPM, onStop) {
+export function playPattern(beats, bpm = DEFAULT_BPM) {
   const audioCtx = new AudioContext()
   const subdivDuration = 60 / bpm / 2
-  const sources = []
+  const patternDuration = beats.length * subdivDuration
+  let stopped = false
 
-  beats.forEach((beat, i) => {
-    if (!beat) return
-    const freq = beat === 'D' ? DOWN_FREQ : UP_FREQ
-    const src = audioCtx.createBufferSource()
-    src.buffer = karplusBuffer(audioCtx, freq)
-    src.connect(audioCtx.destination)
-    src.start(audioCtx.currentTime + i * subdivDuration)
-    sources.push(src)
-  })
+  function schedulePass(baseTime) {
+    if (stopped) return
+    beats.forEach((beat, i) => {
+      if (!beat) return
+      const freq = beat === 'D' ? DOWN_FREQ : UP_FREQ
+      const src = audioCtx.createBufferSource()
+      src.buffer = karplusBuffer(audioCtx, freq)
+      src.connect(audioCtx.destination)
+      src.start(baseTime + i * subdivDuration)
+    })
+    const msUntilNext = (baseTime + patternDuration - audioCtx.currentTime) * 1000 - 50
+    setTimeout(() => schedulePass(baseTime + patternDuration), Math.max(0, msUntilNext))
+  }
 
-  const totalMs = (beats.length * subdivDuration + STRUM_DURATION) * 1000
-  const timeout = setTimeout(() => {
-    audioCtx.close()
-    onStop?.()
-  }, totalMs)
+  schedulePass(audioCtx.currentTime)
 
   return function stop() {
-    clearTimeout(timeout)
-    sources.forEach(s => { try { s.stop() } catch (_) {} })
+    stopped = true
     audioCtx.close()
-    onStop?.()
   }
 }
