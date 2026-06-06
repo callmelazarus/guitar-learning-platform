@@ -1,14 +1,14 @@
 *, *::before, *::after { box-sizing: border-box; }
 
 :root {
-  --bg: #1c1917;
-  --surface: #292524;
-  --surface2: #44403c;
+  --bg: #13151a;
+  --surface: #1c1f27;
+  --surface2: #2b2f3b;
   --accent: #f59e0b;
   --accent2: #34d399;
   --green: #34d399;
-  --text: #fafaf9;
-  --text-muted: #a8a29e;
+  --text: #eef0f5;
+  --text-muted: #8892a4;
   --radius: 8px;
   --font: 'Segoe UI', system-ui, sans-serif;
 }
