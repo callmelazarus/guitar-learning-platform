@@ -28,9 +28,16 @@ Hosted site: https://guitar-learning-platform-chi.vercel.app/
 - **Song history** — all learned songs sorted by date
 
 ### Chords
+- **Advanced chord library** — Sus & Add9, Seventh, and Slash chord diagrams with descriptions of when and why to use each type
 - **Progression explorer** — select a progression (I–V–vi–IV, I–IV–V, I–vi–IV–V) and a key (G, D, A, E, C)
 - **Chord diagrams** — SVG fingering diagrams for each chord in the selected progression
-- **Song examples** — worship songs that use that progression in that key
+- **Song examples** — worship songs that use that progression in that key, linking to Ultimate Guitar search
+
+### Strumming Patterns
+- **Five beginner patterns** — All Down, Down-Down-Up, D-DU-UDU, D-DU D-DU, and Slow Ballad
+- **Beat-grid diagrams** — SVG grids showing ↓/↑ strokes across all 8 subdivisions (1 & 2 & 3 & 4 &)
+- **Audio playback** — ▶ Play button synthesizes a guitar-like pluck sound (Karplus-Strong) at 80 BPM, looping until stopped
+- **Song examples** — worship songs that use each pattern, linking to Ultimate Guitar search
 
 ### Theory Reference
 - **Circle of Fifths** — interactive SVG; click any key to see its relative minor and diatonic chords
@@ -43,9 +50,10 @@ Hosted site: https://guitar-learning-platform-chi.vercel.app/
 ## Stack
 
 - **React 18** + **Vite**
-- **React Router v6** — five client-side routes
+- **React Router v6** — six client-side routes
 - **Vitest** + **@testing-library/react** — unit and component tests
 - No external state library — a single `useAppData` hook owns all state and localStorage I/O
+- No audio dependencies — strumming playback uses the Web Audio API directly
 
 ---
 
