@@ -12,7 +12,7 @@ export default function SongHistory({ songs, onUndo }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       {sorted.map(s => (
-        <div key={(s.dateLearned || s.dateStarted) + s.title} style={{ background: 'var(--surface)', borderRadius: 'var(--radius)', padding: '16px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div key={s.id} style={{ background: 'var(--surface)', borderRadius: 'var(--radius)', padding: '16px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
             <div style={{ fontWeight: 600 }}>{s.title}</div>
             <div style={{ fontSize: 13, color: 'var(--text-muted)' }}>{s.artist}{s.key ? ` · Key of ${s.key}` : ''}</div>
