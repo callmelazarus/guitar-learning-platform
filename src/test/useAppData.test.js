@@ -113,4 +113,44 @@ describe('useAppData', () => {
     act(() => result.current.togglePracticeDay('2026-05-25')) // future relative to mocked May 24
     expect(result.current.practiceDays).not.toContain('2026-05-25')
   })
+
+  it('unmarkSongLearned moves song back to activeSongs as in_progress', () => {
+    const { result } = renderHook(() => useAppData())
+    const song = { title: 'Goodness of God', artist: 'Bethel Music', key: 'G', dateStarted: '2026-05-01', youtubeUrl: '', tabUrl: '', status: 'in_progress' }
+    act(() => result.current.addSong(song))
+    const id = result.current.activeSongs[0].id
+    act(() => result.current.markSongLearned(id))
+    expect(result.current.songHistory).toHaveLength(1)
+    act(() => result.current.unmarkSongLearned(id))
+    expect(result.current.songHistory).toHaveLength(0)
+    expect(result.current.activeSongs).toHaveLength(1)
+    expect(result.current.activeSongs[0].status).toBe('in_progress')
+    expect(result.current.activeSongs[0].dateLearned).toBeUndefined()
+  })
+
+  it('unmarkSongLearned preserves all other song fields', () => {
+    const { result } = renderHook(() => useAppData())
+    const song = { title: 'Way Maker', artist: 'Sinach', key: 'D', dateStarted: '2026-05-01', youtubeUrl: 'https://youtube.com/abc', tabUrl: 'https://ug.com/abc', status: 'in_progress' }
+    act(() => result.current.addSong(song))
+    const id = result.current.activeSongs[0].id
+    act(() => result.current.markSongLearned(id))
+    act(() => result.current.unmarkSongLearned(id))
+    const restored = result.current.activeSongs[0]
+    expect(restored.title).toBe('Way Maker')
+    expect(restored.artist).toBe('Sinach')
+    expect(restored.key).toBe('D')
+    expect(restored.dateStarted).toBe('2026-05-01')
+    expect(restored.youtubeUrl).toBe('https://youtube.com/abc')
+    expect(restored.tabUrl).toBe('https://ug.com/abc')
+  })
+
+  it('unmarkSongLearned is a no-op for unknown id', () => {
+    const { result } = renderHook(() => useAppData())
+    act(() => result.current.addSong({ title: 'Song A', artist: '', key: 'G', dateStarted: '2026-05-01', youtubeUrl: '', tabUrl: '', status: 'in_progress' }))
+    const id = result.current.activeSongs[0].id
+    act(() => result.current.markSongLearned(id))
+    act(() => result.current.unmarkSongLearned('nonexistent'))
+    expect(result.current.songHistory).toHaveLength(1)
+    expect(result.current.activeSongs).toHaveLength(0)
+  })
 })

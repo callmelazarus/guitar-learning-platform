@@ -68,6 +68,20 @@ export function useAppData() {
     }))
   }, [])
 
+  const unmarkSongLearned = useCallback((id) => {
+    setData(prev => {
+      const song = prev.songHistory.find(s => s.id === id)
+      if (!song) return prev
+      const { dateLearned, ...rest } = song
+      const restored = { ...rest, status: 'in_progress' }
+      return {
+        ...prev,
+        songHistory: prev.songHistory.filter(s => s.id !== id),
+        activeSongs: [...prev.activeSongs, restored],
+      }
+    })
+  }, [])
+
   return {
     practiceDays: data.practiceDays,
     activeSongs: data.activeSongs,
@@ -78,6 +92,7 @@ export function useAppData() {
     togglePracticeDay,
     addSong,
     markSongLearned,
+    unmarkSongLearned,
     removeSong,
   }
 }
