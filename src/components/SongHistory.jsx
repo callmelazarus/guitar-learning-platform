@@ -25,7 +25,7 @@ export default function SongHistory({ songs, onUndo }) {
             {onUndo && (
               <button
                 onClick={() => onUndo(s.id)}
-                style={{ background: 'var(--surface2)', color: 'var(--text-muted)', padding: '6px 16px', fontSize: 13 }}
+                style={{ background: 'var(--surface2)', color: 'var(--text-muted)', padding: '6px 16px', fontSize: 13, border: 'none', cursor: 'pointer' }}
               >
                 Undo
               </button>
