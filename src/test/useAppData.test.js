@@ -142,6 +142,7 @@ describe('useAppData', () => {
     expect(restored.dateStarted).toBe('2026-05-01')
     expect(restored.youtubeUrl).toBe('https://youtube.com/abc')
     expect(restored.tabUrl).toBe('https://ug.com/abc')
+    expect(restored.id).toBe(id)
   })
 
   it('unmarkSongLearned is a no-op for unknown id', () => {
