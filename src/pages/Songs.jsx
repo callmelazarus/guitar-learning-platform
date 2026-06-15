@@ -4,7 +4,7 @@ import SongForm from '../components/SongForm'
 import SongHistory from '../components/SongHistory'
 
 export default function Songs() {
-  const { activeSongs, songHistory, addSong, markSongLearned, removeSong } = useAppData()
+  const { activeSongs, songHistory, addSong, markSongLearned, unmarkSongLearned, removeSong } = useAppData()
   const [showForm, setShowForm] = useState(false)
 
   function handleSave(song) {
@@ -68,7 +68,7 @@ export default function Songs() {
 
       <section>
         <h2 style={{ margin: '0 0 16px', fontWeight: 400, color: 'var(--text-muted)' }}>Song History</h2>
-        <SongHistory songs={songHistory} />
+        <SongHistory songs={songHistory} onUndo={unmarkSongLearned} />
       </section>
     </div>
   )
