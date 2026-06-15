@@ -1,6 +1,6 @@
 const STATUS_COLOR = { learned: 'var(--green)', in_progress: 'var(--accent2)', not_started: 'var(--text-muted)' }
 
-export default function SongHistory({ songs }) {
+export default function SongHistory({ songs, onUndo }) {
   const sorted = [...songs].sort((a, b) => {
     const da = a.dateLearned || a.dateStarted || ''
     const db = b.dateLearned || b.dateStarted || ''
@@ -20,7 +20,17 @@ export default function SongHistory({ songs }) {
               Started {s.dateStarted}{s.dateLearned ? ` · Learned ${s.dateLearned}` : ''}
             </div>
           </div>
-          <span style={{ color: STATUS_COLOR[s.status] || 'var(--text-muted)', fontSize: 13 }}>✓ Learned</span>
+          <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+            <span style={{ color: STATUS_COLOR[s.status] || 'var(--text-muted)', fontSize: 13 }}>✓ Learned</span>
+            {onUndo && (
+              <button
+                onClick={() => onUndo(s.id)}
+                style={{ background: 'var(--surface2)', color: 'var(--text-muted)', padding: '6px 16px', fontSize: 13 }}
+              >
+                Undo
+              </button>
+            )}
+          </div>
         </div>
       ))}
     </div>
