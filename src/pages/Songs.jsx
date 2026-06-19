@@ -44,12 +44,12 @@ export default function Songs() {
                 <div style={{ display: 'flex', gap: 12, marginBottom: 20, flexWrap: 'wrap', alignItems: 'center' }}>
                   {song.key && <span style={{ background: 'var(--surface2)', padding: '2px 10px', borderRadius: 12, fontSize: 13 }}>Key of {song.key}</span>}
                   {song.youtubeUrl && <a href={song.youtubeUrl} target="_blank" rel="noreferrer" style={{ fontSize: 14, fontWeight: 600, background: 'var(--surface2)', color: 'var(--accent2)', padding: '10px 24px', borderRadius: 'var(--radius)', textDecoration: 'none' }}>YouTube ↗</a>}
-                  {song.tabUrl && <a href={song.tabUrl} target="_blank" rel="noreferrer" style={{ fontSize: 14, fontWeight: 600, background: 'var(--surface2)', color: 'var(--accent2)', padding: '10px 24px', borderRadius: 'var(--radius)', textDecoration: 'none' }}>Tab ↗</a>}
+                  {song.tabUrl && <a href={song.tabUrl} target="_blank" rel="noreferrer" style={{ fontSize: 14, fontWeight: 600, background: 'var(--surface2)', color: '#4ade80', padding: '10px 24px', borderRadius: 'var(--radius)', textDecoration: 'none' }}>Tab ↗</a>}
                 </div>
                 <div style={{ display: 'flex', gap: 12 }}>
                   <button
                     onClick={() => markSongLearned(song.id)}
-                    style={{ background: 'var(--green)', color: '#fff', padding: '10px 24px', fontWeight: 600 }}
+                    style={{ background: '#1a3328', color: '#6ee7b7', padding: '10px 24px', fontWeight: 600 }}
                   >
                     Mark as Learned ✓
                   </button>
