@@ -3,8 +3,8 @@ import { buildScaleBox, rootFret } from '../utils/scaleFrets'
 
 const STRINGS = ['E', 'A', 'D', 'G', 'B', 'e']
 const FRETS = 5
-const W = 300, H = 120
-const padL = 28, padT = 16
+const W = 440, H = 180
+const padL = 52, padT = 20
 const strH = (H - padT) / 5
 const fretW = (W - padL) / (FRETS - 1)
 
@@ -14,9 +14,9 @@ export default function ScaleBoxDiagram({ scaleId, root }) {
   const startFret = rootFret(root)
 
   return (
-    <svg width={W + 20} height={H + 24}>
+    <svg width={W + 20} height={H + 30}>
       {STRINGS.map((s, i) => (
-        <text key={s} x={padL - 6} y={padT + i * strH + 4} textAnchor="end" fontSize={11} fill="var(--text-muted)">{s}</text>
+        <text key={s} x={padL - 12} y={padT + i * strH + 4} textAnchor="end" fontSize={13} fill="var(--text-muted)">{s}</text>
       ))}
       {Array.from({ length: FRETS }, (_, i) => (
         <text key={i} x={padL + i * fretW} y={H + 18} textAnchor="middle" fontSize={14} fill="var(--text-muted)">
@@ -46,7 +46,7 @@ export default function ScaleBoxDiagram({ scaleId, root }) {
               <circle
                 cx={cx}
                 cy={cy}
-                r={8}
+                r={13}
                 fill={isRoot ? 'var(--accent2)' : 'var(--surface2)'}
                 stroke={isRoot ? 'var(--accent2)' : '#888'}
                 strokeWidth={1}
@@ -56,7 +56,7 @@ export default function ScaleBoxDiagram({ scaleId, root }) {
                 y={cy}
                 textAnchor="middle"
                 dominantBaseline="central"
-                fontSize={note.length > 1 ? 6 : 7}
+                fontSize={note.length > 1 ? 9 : 11}
                 fontWeight="bold"
                 fill={isRoot ? '#000' : 'var(--text)'}
                 style={{ pointerEvents: 'none', userSelect: 'none' }}
