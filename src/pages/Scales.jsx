@@ -13,16 +13,26 @@ export default function Scales() {
         <section key={scale.id}>
           <h2 style={{ fontWeight: 400, color: 'var(--text-muted)', marginBottom: 8 }}>{scale.label}</h2>
           <p style={{ color: 'var(--text-muted)', fontSize: 13, marginBottom: 12 }}>{scale.blurb}</p>
-          <label style={{ fontSize: 13, color: 'var(--text-muted)' }}>
-            Root note:{' '}
-            <select
-              value={roots[scale.id]}
-              onChange={e => setRoots(prev => ({ ...prev, [scale.id]: e.target.value }))}
-              style={{ marginLeft: 8 }}
-            >
-              {ROOTS.map(r => <option key={r} value={r}>{r}</option>)}
-            </select>
-          </label>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+            {ROOTS.map(r => (
+              <button
+                key={r}
+                onClick={() => setRoots(prev => ({ ...prev, [scale.id]: r }))}
+                style={{
+                  padding: '5px 11px',
+                  fontSize: 13,
+                  fontWeight: roots[scale.id] === r ? 700 : 400,
+                  background: roots[scale.id] === r ? 'var(--accent2)' : 'var(--surface2)',
+                  color: roots[scale.id] === r ? '#000' : 'var(--text-muted)',
+                  border: 'none',
+                  borderRadius: 6,
+                  cursor: 'pointer',
+                }}
+              >
+                {r}
+              </button>
+            ))}
+          </div>
           <div style={{ marginTop: 12 }}>
             <ScaleBoxDiagram scaleId={scale.id} root={roots[scale.id]} />
           </div>

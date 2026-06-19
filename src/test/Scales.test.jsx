@@ -13,18 +13,17 @@ describe('Scales page', () => {
     expect(screen.getByText('Blues')).toBeInTheDocument()
   })
 
-  it('defaults every root selector to E', () => {
+  it('renders 12 root buttons per scale (60 total)', () => {
     render(<Scales />)
-    const selects = screen.getAllByRole('combobox')
-    expect(selects).toHaveLength(5)
-    selects.forEach(select => expect(select.value).toBe('E'))
+    expect(screen.getAllByRole('button')).toHaveLength(60)
   })
 
-  it('changing one scale\'s root note does not affect the others', async () => {
+  it('changing one scale\'s root to G does not affect the others', async () => {
     render(<Scales />)
-    const selects = screen.getAllByRole('combobox')
-    await userEvent.selectOptions(selects[0], 'G')
-    expect(selects[0].value).toBe('G')
-    expect(selects[1].value).toBe('E')
+    const gButtons = screen.getAllByRole('button', { name: 'G' })
+    await userEvent.click(gButtons[0])
+    // first scale's G button should now be bold (fontWeight 700), others unchanged
+    expect(gButtons[0]).toHaveStyle({ fontWeight: '700' })
+    expect(gButtons[1]).not.toHaveStyle({ fontWeight: '700' })
   })
 })
