@@ -7,6 +7,7 @@ const links = [
   { to: '/progressions', label: 'Chords' },
   { to: '/strumming', label: 'Strumming' },
   { to: '/theory', label: 'Theory' },
+  { to: '/scales', label: 'Scales' },
 ]
 
 export default function NavBar() {

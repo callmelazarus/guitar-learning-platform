@@ -6,6 +6,7 @@ import Songs from './pages/Songs'
 import Theory from './pages/Theory'
 import Progressions from './pages/Progressions'
 import Strumming from './pages/Strumming'
+import Scales from './pages/Scales'
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
           <Route path="/theory" element={<Theory />} />
           <Route path="/progressions" element={<Progressions />} />
           <Route path="/strumming" element={<Strumming />} />
+          <Route path="/scales" element={<Scales />} />
         </Routes>
       </main>
     </div>
