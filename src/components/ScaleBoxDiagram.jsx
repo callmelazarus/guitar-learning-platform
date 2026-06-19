@@ -16,7 +16,7 @@ export default function ScaleBoxDiagram({ scaleId, root }) {
   return (
     <svg width={W + 20} height={H + 40}>
       {STRINGS.map((s, i) => (
-        <text key={s} x={padL - 12} y={padT + i * strH + 4} textAnchor="end" fontSize={13} fill="var(--text-muted)">{s}</text>
+        <text key={s} x={padL - 24} y={padT + i * strH + 4} textAnchor="end" fontSize={13} fill="var(--text-muted)">{s}</text>
       ))}
       {Array.from({ length: frets }, (_, i) => (
         <text key={i} x={padL + i * fretW} y={H + 28} textAnchor="middle" fontSize={14} fill="var(--text-muted)">
