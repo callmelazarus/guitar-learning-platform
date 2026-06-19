@@ -1,3 +1,4 @@
+import { version } from '../../package.json'
 import { useAppData } from '../hooks/useAppData'
 import { today } from '../utils/dates'
 import StreakBar from '../components/StreakBar'
@@ -31,6 +32,9 @@ export default function Dashboard() {
           </div>
         )}
       </section>
+      <div style={{ textAlign: 'right', color: 'var(--text-muted)', fontSize: 11, opacity: 0.4 }}>
+        v{version}
+      </div>
     </div>
   )
 }
