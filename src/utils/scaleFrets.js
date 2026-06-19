@@ -23,7 +23,7 @@ export function buildScaleBox(intervals, root) {
     for (let fret = 0; fret < FRETS; fret++) {
       const pitch = (openPitch + startFret + fret) % 12
       if (scaleSet.has(pitch)) {
-        dots.push({ fret, isRoot: pitch === rootPc })
+        dots.push({ fret, isRoot: pitch === rootPc, note: NOTE_NAMES[pitch] })
       }
     }
     return dots

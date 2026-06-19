@@ -4,10 +4,10 @@ import ScaleBoxDiagram from '../components/ScaleBoxDiagram'
 
 describe('ScaleBoxDiagram', () => {
   it('renders an svg with all 6 string labels', () => {
-    const { container, getByText } = render(<ScaleBoxDiagram scaleId="major" root="E" />)
+    const { container, getAllByText } = render(<ScaleBoxDiagram scaleId="major" root="E" />)
     expect(container.querySelector('svg')).toBeTruthy()
     ;['E', 'A', 'D', 'G', 'B', 'e'].forEach(label => {
-      expect(getByText(label)).toBeInTheDocument()
+      expect(getAllByText(label).length).toBeGreaterThanOrEqual(1)
     })
   })
 

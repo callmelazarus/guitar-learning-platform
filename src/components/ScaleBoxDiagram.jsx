@@ -19,7 +19,7 @@ export default function ScaleBoxDiagram({ scaleId, root }) {
         <text key={s} x={padL - 6} y={padT + i * strH + 4} textAnchor="end" fontSize={11} fill="var(--text-muted)">{s}</text>
       ))}
       {Array.from({ length: FRETS }, (_, i) => (
-        <text key={i} x={padL + i * fretW} y={H + 18} textAnchor="middle" fontSize={10} fill="var(--text-muted)">
+        <text key={i} x={padL + i * fretW} y={H + 18} textAnchor="middle" fontSize={14} fill="var(--text-muted)">
           {startFret + i === 0 ? 'open' : startFret + i}
         </text>
       ))}
@@ -38,17 +38,34 @@ export default function ScaleBoxDiagram({ scaleId, root }) {
         />
       ))}
       {box.flatMap((dots, s) =>
-        dots.map(({ fret, isRoot }) => (
-          <circle
-            key={`${s}-${fret}`}
-            cx={padL + fret * fretW}
-            cy={padT + s * strH}
-            r={8}
-            fill={isRoot ? 'var(--accent2)' : 'var(--surface2)'}
-            stroke={isRoot ? 'var(--accent2)' : '#888'}
-            strokeWidth={1}
-          />
-        ))
+        dots.map(({ fret, isRoot, note }) => {
+          const cx = padL + fret * fretW
+          const cy = padT + s * strH
+          return (
+            <g key={`${s}-${fret}`}>
+              <circle
+                cx={cx}
+                cy={cy}
+                r={8}
+                fill={isRoot ? 'var(--accent2)' : 'var(--surface2)'}
+                stroke={isRoot ? 'var(--accent2)' : '#888'}
+                strokeWidth={1}
+              />
+              <text
+                x={cx}
+                y={cy}
+                textAnchor="middle"
+                dominantBaseline="central"
+                fontSize={note.length > 1 ? 6 : 7}
+                fontWeight="bold"
+                fill={isRoot ? '#000' : 'var(--text)'}
+                style={{ pointerEvents: 'none', userSelect: 'none' }}
+              >
+                {note}
+              </text>
+            </g>
+          )
+        })
       )}
     </svg>
   )
