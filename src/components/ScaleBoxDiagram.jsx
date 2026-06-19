@@ -2,15 +2,15 @@ import { SCALES } from '../data/scales'
 import { buildScaleBox, rootFret } from '../utils/scaleFrets'
 
 const STRINGS = ['E', 'A', 'D', 'G', 'B', 'e']
-const FRETS = 5
 const W = 440, H = 180
 const padL = 70, padT = 20
 const strH = (H - padT) / 5
-const fretW = (W - padL) / (FRETS - 1)
 
 export default function ScaleBoxDiagram({ scaleId, root }) {
   const scale = SCALES.find(s => s.id === scaleId)
-  const box = buildScaleBox(scale.intervals, root)
+  const frets = scale.frets ?? 5
+  const fretW = (W - padL) / (frets - 1)
+  const box = buildScaleBox(scale.intervals, root, frets)
   const startFret = rootFret(root)
 
   return (
@@ -18,7 +18,7 @@ export default function ScaleBoxDiagram({ scaleId, root }) {
       {STRINGS.map((s, i) => (
         <text key={s} x={padL - 12} y={padT + i * strH + 4} textAnchor="end" fontSize={13} fill="var(--text-muted)">{s}</text>
       ))}
-      {Array.from({ length: FRETS }, (_, i) => (
+      {Array.from({ length: frets }, (_, i) => (
         <text key={i} x={padL + i * fretW} y={H + 28} textAnchor="middle" fontSize={14} fill="var(--text-muted)">
           {startFret + i === 0 ? 'open' : startFret + i}
         </text>
@@ -26,7 +26,7 @@ export default function ScaleBoxDiagram({ scaleId, root }) {
       {STRINGS.map((_, i) => (
         <line key={i} x1={padL} y1={padT + i * strH} x2={W + 4} y2={padT + i * strH} stroke="#555" strokeWidth={1} />
       ))}
-      {Array.from({ length: FRETS }, (_, i) => (
+      {Array.from({ length: frets }, (_, i) => (
         <line
           key={i}
           x1={padL + i * fretW}
