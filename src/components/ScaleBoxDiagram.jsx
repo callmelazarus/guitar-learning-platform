@@ -4,7 +4,7 @@ import { buildScaleBox, rootFret } from '../utils/scaleFrets'
 const STRINGS = ['E', 'A', 'D', 'G', 'B', 'e']
 const FRETS = 5
 const W = 440, H = 180
-const padL = 52, padT = 20
+const padL = 70, padT = 20
 const strH = (H - padT) / 5
 const fretW = (W - padL) / (FRETS - 1)
 
@@ -14,12 +14,12 @@ export default function ScaleBoxDiagram({ scaleId, root }) {
   const startFret = rootFret(root)
 
   return (
-    <svg width={W + 20} height={H + 30}>
+    <svg width={W + 20} height={H + 40}>
       {STRINGS.map((s, i) => (
         <text key={s} x={padL - 12} y={padT + i * strH + 4} textAnchor="end" fontSize={13} fill="var(--text-muted)">{s}</text>
       ))}
       {Array.from({ length: FRETS }, (_, i) => (
-        <text key={i} x={padL + i * fretW} y={H + 18} textAnchor="middle" fontSize={14} fill="var(--text-muted)">
+        <text key={i} x={padL + i * fretW} y={H + 28} textAnchor="middle" fontSize={14} fill="var(--text-muted)">
           {startFret + i === 0 ? 'open' : startFret + i}
         </text>
       ))}
